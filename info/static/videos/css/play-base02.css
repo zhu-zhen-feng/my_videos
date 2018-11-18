@@ -1,0 +1,845 @@
+@charset "UTF-8";
+/*css 初始化 */
+/**
+    标签内外边距清零
+ */
+html, body, ul, li, ol, dl, dd, dt, p, h1, h2, h3, h4, h5, h6, form, fieldset, legend, img {
+    margin: 0;
+    padding: 0;
+}
+
+fieldset, img, input, button { /*fieldset组合表单中的相关元素*/
+    border: none;
+    padding: 0;
+    margin: 0;
+    /*去除input标签的外边线, 默认点击input输入框的时候会有一个蓝色的外边框线*/
+    outline-style: none;
+}
+
+ul, ol {
+    list-style: none; /*清除列表风格（默认列表前面的小圆点）*/
+}
+
+input {
+    padding-top: 0; /*这里实际上在上面已经清零了**/
+    padding-bottom: 0;
+}
+
+select, input {
+    vertical-align: middle; /*垂直居中*/
+}
+
+select, input, textarea {
+    font-size: 12px;
+    margin: 0;
+}
+
+textarea {
+    resize: none; /**防止textarea可以拖动大小*/
+}
+
+/*防止多行文本框拖动*/
+img {
+    border: 0;
+    vertical-align: middle;
+}
+
+/*  去掉图片低测默认的3像素空白缝隙*/
+table {
+    border-collapse: collapse; /*合并外边线*/
+}
+
+body {
+    /*通过直接设置font的方式可以快速设置字体的样式*/
+    font: 12px/150% Arial, Verdana, "\5b8b\4f53"; /*宋体，Unicode，统一码*/
+    color: #666;
+    background: #fff
+}
+
+/*清除浮动的三句话（面试必考）*/
+.clearfix:before, .clearfix:after {
+    content: "";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1; /*IE/7/6*/
+}
+
+/*设置a标签的样式*/
+a {
+    color: #666;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #FF6600;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    text-decoration: none;
+    font-weight: normal;
+    /*继承父盒子的大小*/
+    font-size: 100%;
+}
+
+/*小标签用于制作下三角、小的购物车等的图标和标签*/
+s, i, em {
+    font-style: normal;
+    text-decoration: none;
+}
+
+/*设置为最高权限
+span div            1
+.class .box         10
+#box  #box          100
+<div style=''>      1000
+!important          无穷大
+*/
+.col-red {
+    color: #C81623 !important;
+}
+
+/*左浮动*/
+.fl {
+    float: left
+}
+
+/*右浮动*/
+.fr {
+    float: right
+}
+
+/*文本居左、居中、居右*/
+.al {
+    text-align: left
+}
+
+.ac {
+    text-align: center
+}
+
+.ar {
+    text-align: right
+}
+
+/*块元素的隐藏*/
+.hide {
+    display: none
+}
+.site-nav {
+    /*默认不要指定父容器的高度*/
+    width: 100%;
+    /*指定导航栏的高度*/
+    background-color: #FFFFFF;
+    /*这里面的盒子暂时不浮动*/
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+
+    /*IE6下面的阴影效果：strength是阴影大小，direction是阴影方位，单位为度，可以为负数，color是阴影颜色 */
+    -ms-filter:"progid:DXImageTransform.Microsoft.Shadow(Strength=4,Direction=135, Color='#000000')";
+    filter:progid:DXImageTransform.Microsoft.Shadow(Strength=4,Direction=135,Color='#000000');
+    filter: progid:DXImageTransform.Microsoft.Shadow(color='#969696', Direction=125, Strength=5);
+
+    position: relative;
+    z-index: 1;
+}
+.site-nav-logo {
+    width: 205px;
+    height: 40px;
+    /*background-color: #C81623;*/
+    padding: 16px 0 16px 3px;
+    float: left;
+}
+.site-nav-logo .logo {
+    font: 700 25px/150% 'Microsoft YaHei';
+    color: #212F3D;
+}
+.site-nav-logo img {
+    padding-right: 3px;
+    width: 30px;
+}
+.site-nav-search {
+    float: left;
+    margin-left: 145px;
+    margin-top: 16px;
+}
+.site-nav-search input {
+    float: left;
+    height: 34px;
+    width: 176px;
+    border: 1px solid #CCCCCC;
+    color: #CCCCCC;
+    font: 400 14px/34px 'Microsoft YaHei';
+}
+.site-nav-search button {
+    margin-left: -1px;
+    float: left;
+    height: 36px;
+    width: 78px;
+    background-color: #fff;
+    border: 1px solid #CCCCCC;
+    cursor: pointer;
+}
+.site-nav-search button:hover {
+    background-color: #EAEDED;
+}
+.site-nav-r {
+    float: right;
+}
+.site-nav-r a {
+    float: left;
+    margin-top: 16px;
+    font: 700 16px/30px 'Microsoft YaHei';
+    margin-right: 10px;
+}
+.site-nav-user {
+    float: left;
+}
+.site-nav-user a {
+    line-height: 30px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.site-nav-user img{
+    line-height: 30px;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+/*site-nav end*/
+
+
+/*footer start*/
+.footer {
+    background-color: #333333;
+    width: 100%;
+    margin-top: 95px;
+    margin-bottom: 0px;
+}
+
+.footer-links {
+    background-color: #333333;
+    float: left;
+    /*这里需要给内部的盒子何止填充100%*/
+    width: 100%;
+    height: 200px;
+    padding: 15px 0;
+    margin-bottom: 0px;
+}
+
+.footer-links dl {
+    float: left;
+    width: 240px;
+}
+
+.footer-links dl dt {
+    height: 35px;
+    line-height: 35px;
+    font: 400 16px/35px '微软雅黑';
+}
+
+.footer-links dl dd {
+    height: 22px;
+    line-height: 22px;
+
+}
+.footer-links .last {
+    width: 250px;
+    position: relative;
+}
+.footer-links .last dd {
+    border-radius: 5px;
+    margin-top: 20px;
+    float: left;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    font: 15px/40px 'Microsoft YaHei';
+    background-color: #F8F8F8;
+    margin-left: 15px;
+}
+.footer-links .last dd:hover {
+    cursor: pointer;
+}
+.img-show {
+    padding: 5px;
+    width: 190px;
+    height: 190px;
+    position: absolute;
+    top: -155px;
+    right: 110px;
+    border-radius: 10px;
+    background-color: #F1F1F1;
+    display: none;
+}
+.img-show img {
+    width: 190px;
+    height: 190px;
+}
+/*footer end*/
+
+.login_form_con,.register_form_con{
+    display:none;
+}
+
+.login_form,.register_form{
+    width:350px;
+    height:400px;
+    position:fixed;
+    background:#E0EEEE;
+    border-radius:5px;
+    left:50%;
+    top:50%;
+    margin-left:-175px;
+    margin-top:-200px;
+    z-index:9999;
+}
+
+.register_form{
+    height:500px;
+    margin-top:-250px;
+}
+
+.mask{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:#000;
+    opacity:0.3;
+    filter:alpha(opacity=30);
+    left:0px;
+    top:0px;
+    z-index:9998;
+}
+
+.login_title,.register_title{
+    height:72px;
+    border-bottom:1px solid #dcdcdc;
+    position:relative;
+}
+.login_title h3,.register_title h3{
+    line-height:72px;
+    text-align:center;
+    font-size:18px;
+    color:#1482f0;
+}
+
+.form_group{
+    width:310px;
+    height:50px;
+    border-bottom:1px solid #ebebeb;
+    margin:23px auto 0;
+    position:relative;
+}
+
+.form_group2{
+    width:310px;
+    margin:20px auto 0;
+    font-size:12px;
+    color:#999;
+    position:relative;
+}
+
+.register_form .form_group{
+    margin:15px auto 0;
+}
+
+.register_form .input_sub{
+    margin:30px auto 0;
+}
+
+.form_group .error_tip,.form_group2 .error_tip{
+    position:absolute;
+    font-size:12px;
+    color:#f00;
+    left: auto;
+    right:0px;
+    top: auto;
+    bottom:-20px;
+    display:none;
+}
+
+.form_group2 input,.form_group2 p{
+    float:left;
+}
+
+.form_group2 input{
+    margin:2px 10px 0 0;
+}
+
+.form_group .get_code{
+    position:absolute;
+    right:0px;
+    top:20px;
+    color:#70b7f9;
+    font-size:12px;
+}
+
+.form_group .get_pic_code{
+    position:absolute;
+    width:80px;
+    height:30px;
+    right:0px;
+    top:10px;
+}
+
+.form_group .get_code:hover{
+    color:#1482f0;
+}
+
+.register_form .code_pwd{
+    width:200px;
+}
+
+.hotline{
+    border-bottom:1px solid #2185ed;
+}
+
+.form_group input{
+    width:310px;
+    height:44px;
+    border:0px;
+    outline:none;
+    position:absolute;
+    left:0;
+    bottom:0;
+}
+
+.form_group .input_tip{
+    position:absolute;
+    left:0;
+    top:22px;
+    width:110px;
+    line-height:14px;
+    font-size:14px;
+    color:#999;
+}
+
+.input_sub{
+    display:block;
+    width:310px;
+    height:40px;
+    background:#1482f0;
+    border:0px;
+    color:#fff;
+    font-size:14px;
+    margin:50px auto 0;
+    border-radius:4px;
+    cursor:pointer;
+}
+
+.input_sub:hover{
+    background:#4d9df1;
+}
+
+.user_login{
+    height:30px;
+    overflow: hidden;
+    margin-top:15px;
+    /*display:none;    */
+}
+
+.user_login img{
+    float:left;
+    width:30px;
+    height:30px;
+    border-radius:15px;
+}
+
+.user_login a{
+    float:left;
+    font-size:14px;
+    margin-left:10px;
+    color:#39f;
+    line-height:0px;
+}
+.commit-comment {
+    float: left;
+    margin-left: 15px;
+    display: block;
+    width: 104px;
+    height: 34px;
+    background-color: #5CB85C;
+    margin-bottom: 15px;
+    color: #ffffff;
+    font: 400 14px/34px 'Microsoft YaHei';
+    text-align: center;
+}
+.collection{
+    display:inline-block;;
+    width:98px;
+    line-height:34px;
+    text-indent:45px;
+    border:1px solid #3791ef;
+    color:#3791ef;
+    border-radius:4px;
+    font-size:14px;
+    margin:0px 5px;
+    background:url(../images/collect_icons.png) 21px 7px no-repeat;
+    overflow:hidden;
+}
+.block-center {
+    display: block;
+    margin-left: 35%;
+}
+
+.comment_form_logout{
+    border:1px solid #e3e8ee;
+    width:756px;
+    border-radius:4px;
+    padding:15px 10px;
+    outline:none;
+    font-size:16px;
+    color:#e3e8ee;
+    margin-top:50px;
+}
+
+
+.comment_form{
+    margin-top:50px;
+    overflow:hidden;
+    width: 780px;
+}
+
+.comment_form .person_pic{
+    float:left;
+    width:40px;
+    height:40px;
+}
+
+.comment_form img{
+    width:40px;
+    height:40px;
+    border-radius:20px;
+}
+
+.comment_form .comment_input{
+    float:left;
+    width:690px;
+    height:60px;
+    margin-left:20px;
+    border-radius:4px;
+    padding:10px;
+    outline:none;
+    border:1px solid #2185ed;
+}
+
+.comment_form .comment_sub{
+    float:right;
+    width:58px;
+    height:28px;
+    border:1px solid #2185ed;
+    background:#fff;
+    border-radius:4px;
+    margin:10px 7px 0 0;
+    cursor:pointer;
+}
+
+.comment_form .comment_sub:hover{
+    background:#2185ed;
+    color:#fff;
+}
+
+.comment_count{
+    font-size: 16px;
+    color: #333;
+    border-bottom: 1px solid #ebebeb;
+    padding: 12px 0
+}
+
+
+.comment_list{
+    border-bottom:1px solid #ebebeb;
+    overflow:hidden;
+    margin-top:15px;
+    padding-bottom:15px;
+    width: 780px;
+}
+
+
+.comment_list .person_pic{
+    width:40px;
+    height:40px;
+    float:left;
+}
+
+.comment_list .person_pic img{
+    width:40px;
+    height:40px;
+    border-radius:20px;
+}
+
+.user_name{
+    width:690px;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+    color: #333;
+    margin-left:20px;
+}
+
+.comment_text{
+    width:718px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #333;
+    margin:5px 0 0 20px;
+}
+
+.comment_time{
+    font-size:12px;
+    color:#999;
+    margin:10px 0 0 60px;
+}
+
+.comment_up{
+    font-size:12px;
+    color:#999;
+    text-indent:20px;
+    margin:10px 0 0 20px;
+    background:url(../images/zan_icon.png) left top no-repeat;
+}
+
+.has_comment_up{
+    font-size:12px;
+    color:#999;
+    text-indent:20px;
+    margin:10px 0 0 20px;
+    background:url(../images/zan_icon.png) left bottom no-repeat;
+}
+.comment_reply{
+    font-size:12px;
+    color:#999;
+    text-indent:20px;
+    margin:10px 0 0 20px;
+    background:url(../images/reply_icon.png) left center no-repeat;
+}
+
+
+.reply_text_con{
+    width:698px;
+    padding:10px;
+    background:#fafafa;
+    margin:10px 0 0 60px;
+}
+
+.reply_text_con .user_name2{
+    font-size:12px;
+    font-weight:bold;
+    color:#000;
+    margin-bottom:5px;
+}
+
+.reply_text_con .reply_text{
+    color:#666;
+    font-size:12px;
+}
+
+.reply_form{
+    width:718px;
+    overflow:hidden;
+    margin:10px 0 0 60px;
+    display:none;
+}
+
+.reply_input{
+    float:left;
+    width:692px;
+    height:30px;
+    border-radius:4px;
+    padding:10px;
+    outline:none;
+    border:1px solid #2185ed;
+}
+
+.reply_sub,.reply_cancel{
+    width:40px;
+    height:23px;
+    background:#76b6f4;
+    border:0px;
+    border-radius:2px;
+    color:#fff;
+    margin:10px 5px 0 10px;
+    cursor:pointer;
+}
+
+.reply_cancel{
+    background:#fff;
+    color: #909090;
+}
+
+
+.user_con{
+    width:778px;
+    min-height:660px;
+    padding:20px;
+    overflow:hidden;
+    background:#f9f9f9;
+    border:1px solid #ececee;
+}
+.comment_form_logout{
+    border:1px solid #e3e8ee;
+    width:756px;
+    border-radius:4px;
+    padding:15px 10px;
+    outline:none;
+    font-size:16px;
+    color:#e3e8ee;
+    margin-top:50px;
+}
+.collection:hover{
+    background:url(../images/collect_icons.png) 21px -33px no-repeat;
+}
+
+.collected{
+    /*display:inline-block;*/
+    width:100px;
+    height:36px;
+    color:#666;
+    border-radius:4px;
+    font-size:14px;
+    /*margin:0px 5px;*/
+    background:url(../images/collect_icons.png) 15px -73px no-repeat #e6e6e6;
+    position:relative;
+    overflow:hidden;
+}
+
+.collected:hover{
+    background-position:10px -73px;
+}
+
+.collected .out{
+    position:absolute;
+    left:40px;
+    top:8px;
+}
+
+.collected:hover .out{
+    left:40px;
+    top:35px;
+}
+
+.collected .over{
+    position:absolute;
+    left:40px;
+    top:35px;
+}
+
+.collected:hover .over{
+    left:33px;
+    top:8px;
+}
+.login_title a, .register_title a {
+    width: 16px;
+    height: 16px;
+    background: url(../images/shutoff.png) left top no-repeat;
+    font-weight: normal;
+    color: #999;
+    position: absolute;
+    right: 20px;
+    top: 30px;
+}
+
+.select-interface {
+    height: 25px;
+    font: 16px '黑体';
+    text-align: center;
+    color: #FC3F4C;
+    background-color: #26262B;
+    border: #26262B;
+}
+.play-other {
+    float: left;
+}
+.play-other-toast {
+    padding-right: 12px;
+    height: 25px;
+    font: 14px/25px 'Microsoft YaHei';
+}
+
+.movie-name {
+    margin-left: 3px;
+    height: 27px;
+    color: #fff;
+    font: 22px/27px '黑体';
+}
+.play-other {
+    /*margin-top: 20px;*/
+    float: left;
+    width: 100%;
+    height: 50px;
+}
+.play-other-l {
+    padding-top: 25px;
+    height: 25px;
+    width: 580px;
+    float: left;
+}
+.play-other-r {
+    height: 50px;
+    width: 422px;
+    float: right;
+}
+.play-other-r span {
+    float: left;
+}
+.play-other-r {
+    float: right;
+    padding-right: 15px;
+    padding-top: 20px;
+}
+
+.play-other .movie-name {
+    line-height: 26px;
+    font-size: 26px;
+}
+.play-other .movie-index {
+    font-size: 26px;
+    line-height: 26px;
+    color: white;
+}
+.play-other .movie-score {
+    margin-left: 10px;
+    line-height: 26px;
+    font-size: 26px;
+    color: #FF6428;
+}
+
+
+/*播放器的设置*/
+.play>.play-intro {
+    margin-right: 3%;
+    float: right;
+    width: 25%;
+    background-color: #26262B;
+    display:inline-block;
+}
+.play-intro-content {
+    float: left;
+}
+.play-intro-table {
+    font: 16px "黑体";
+}
+.play-intro-table tr{
+    height: 50px;
+}
+.play-intro-table td {
+    text-align: left;
+    width: 158px;
+    color: white;
+    padding-left: 5%;
+}
+.play-intro-table .star {
+    color: #FC3F4C;
+}
+.play-intro-title {
+    padding: 16px 20px;
+    float: left;
+}

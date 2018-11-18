@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>用户中心</title>
+	<link rel="stylesheet" type="text/css" href="../../static/videos/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../../static/videos/css/main.css">
+    <script type="text/javascript" src="../../static/videos/js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="../../static/videos/js/jquery.form.min.js"></script>
+    <script src="../../static/videos/tinymce/js/tinymce/tinymce.min.js"></script>
+    <script src="../../static/videos/js/tinymce_setup.js"></script>
+    <script type="text/javascript" src="../../static/videos/js/user_videos_release.js"></script>
+</head>
+<body class="inframe_body">
+    <form class="release_form">
+        <h3>视频发布</h3>
+        <div class="form-group"><label>视频标题：</label><input type="text" class="input_txt2" name="about"></div>
+        <div class="form-group">
+            <label>视频分类：</label>
+            <select class="sel_opt" name="category_id">
+                {% for category in data.categories %}
+                    <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group"><label>视频：</label><input type="file" accept="video/*" class="input_file" name="video_file" ></div>
+        <div class="form-group"><label>首页图片：</label><input type="file" name="index_image" class="input_file"></div>
+        <div class="form-group">
+            <input type="submit" value="发 布" class="input_sub input_sub2">
+        </div>
+        <div class="error_tip2">错误提示</div>
+    </form>
+    <script>
+        $(function(){
+            window.parent.fnSetIframeHeight(900);
+        })
+    </script>
+</body>
+</html>
