@@ -24,7 +24,6 @@
         {% if data.user.is_admin %}
         <li><a href="{{ url_for("profile.video_release") }}" target="main_frame">视频发布</a></li>
         <li><a href="{{ url_for("profile.user_video_list") }}" target="main_frame">视频列表</a></li>
-        <li><a href="{{ url_for("profile.user_video_list") }}" target="main_frame">视频列表</a></li>
         {% else %}
         {% endif %}
     </ul>
