@@ -1,8 +1,8 @@
 from qiniu import Auth, put_data
 
-access_key = "yV4GmNBLOgQK-1Sn3o4jktGLFdFSrlywR2C-hvsW"
-secret_key = "bixMURPL6tHjrb8QKVg2tm7n9k8C7vaOeQ4MEoeW"
-bucket_name = "ihome"
+access_key = "cBoWlm3JPJqkT1Adtnzh2a-ANT6FUXuoXbP8fjGG"
+secret_key = "122asjN7ywY9Z10d3YAL4U2_i4155t-4FltT2E9Z"
+bucket_name = "videos"
 
 
 def storage(data):
