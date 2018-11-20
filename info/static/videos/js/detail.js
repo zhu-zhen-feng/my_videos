@@ -81,7 +81,7 @@ $(function(){
         var video_comment = $(".comment_input").val();
 
         if (!video_comment) {
-            alert('请输入评论内容');
+            alert('请输入讨论内容');
             return;
         }
         var params = {
@@ -120,9 +120,7 @@ $(function(){
                     comment_html += '</div>'
                     // 拼接到内容的前面
                     $(".comment_list_con").prepend(comment_html)
-                    // 让comment_sub 失去焦点
                     $('.comment_sub').blur();
-                    // 清空输入框内容
                     $(".comment_input").val("")
                     updateCommentCount()
                 }else {
@@ -155,7 +153,7 @@ $(function(){
             var comment = $this.prev().val()
 
             if (!comment) {
-                alert('请输入评论内容')
+                alert('请输入讨论内容')
                 return
             }
             var params = {
@@ -223,5 +221,5 @@ $(function(){
 
 function updateCommentCount() {
     var count = $(".comment_list").length
-    $(".comment_count").html(count+"条评论")
+    $(".comment_count").html(count+"条讨论问题")
 }

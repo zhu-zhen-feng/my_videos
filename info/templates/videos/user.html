@@ -22,7 +22,7 @@
         <li><a href="{{ url_for("profile.pass_info") }}" target="main_frame">密码修改</a></li>
         <li><a href="{{ url_for("profile.user_collection") }}" target="main_frame">我的收藏</a></li>
         {% if data.user.is_admin %}
-        <li><a href="{{ url_for("profile.video_release") }}" target="main_frame">视频发布</a></li>
+        <li><a href="{{ url_for("profile.video_add") }}" target="main_frame">视频发布</a></li>
         <li><a href="{{ url_for("profile.user_video_list") }}" target="main_frame">视频列表</a></li>
         {% else %}
         {% endif %}

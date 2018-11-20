@@ -32,16 +32,11 @@
 
     </div>
 </div>
-
-<!--site-nav end-->
-
-
-<!--play start-->
 <div class="play clearfix">
     <div class="play-video">
         <video id="video_iframe" class="video-js" controls preload="auto" width="880" height="496"
-            poster="{{ data.video.img_url }}?imageView2/1/w/880/h/496" data-setup="{}">
-            <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+            poster="{{ data.video.img_url }}" data-setup="{}">
+            <source src="{{ url_for('static',filename='uploads/'+data.video.url) }}" type="video/mp4">
             <source src="http://vjs.zencdn.net/v/oceans.webm" type="video/webm">
             <source src="http://vjs.zencdn.net/v/oceans.ogv" type="video/ogg">
             <p class="vjs-no-js"> To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a> </p>
@@ -82,30 +77,25 @@
 
     </div>
 </div>
-<!--play end-->
-<!--comment start-->
 <div class="comment clearfix">
     <div class="w">
         <a href="javascript:;" class="collected block-center" data-newid="{{ data.video.id }}" style="display: {% if data.is_collected %} block{% else %} none {% endif %};"><span class="out">已收藏</span><span class="over">取消收藏</span></a>
         <a href="javascript:;" class="collection block-center" data-newid="{{ data.video.id }}" style="display: {% if data.is_collected %} none{% else %} block {% endif %};">收&nbsp;藏</a>
-        <!--评论登录的提示信息-->
         {% if data.user %}
             <form action="" class="comment_form" data-newsid="{{ data.video.id }}">
                 <div class="person_pic">
                     <img src="../../static/videos/images/person01.png" alt="用户图标">
                 </div>
-                <textarea placeholder="请发表您的评论" class="comment_input"></textarea>
-                <input type="submit" name="" value="发表评论" class="comment_sub">
+                <textarea placeholder="请提出您的问题" class="comment_input"></textarea>
+                <input type="submit" name="" value="提问" class="comment_sub">
             </form>
-
         {% else %}
         <div class="comment_form_logout">
-            登录发表你的评论
+            登录讨论
         </div>
         {% endif %}
 
-        <div class="comment_count">{{ data.video.comments_count }}条评论</div>
-        <!--视频评论的内容信息-->
+        <div class="comment_count"><h3>讨&nbsp;&nbsp;论&nbsp;&nbsp;区</h3></div>
         <div class="comment_list_con">
             {% for comment in data.comments %}
                 <div class="comment_list">

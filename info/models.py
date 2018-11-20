@@ -103,14 +103,10 @@ class Videos(BaseModel, db.Model):
     __tablename__ = "videos"
 
     id = db.Column(db.Integer, primary_key=True)
-    # video = db.Column(db.String(10), nullable=False)
     intro = db.Column(db.String(60), nullable=False)  # 简介
-    url = db.Column(db.String(256))  # 七牛云地址
-    reason = db.Column(db.String(256))  # 未通过原因，status = -1 的时候使用
+    url = db.Column(db.String(256))  # 视频地址
     clicks = db.Column(db.Integer, default=0)  # 播放次数
-    img_url = db.Column(db.String(256))  # 首页图片
-    status = db.Column(db.Integer, default=0)  # 当前视频状态 如果为0代表审核通过，1代表审核中，-1代表审核不通过
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))  # 当前新闻的作者id
+    img_url = db.Column(db.String(256))  # 封面
     subject_id = db.Column(db.Integer, db.ForeignKey("subject.id"), nullable=False)  # 分类id
 
     def to_dict(self):
@@ -120,9 +116,7 @@ class Videos(BaseModel, db.Model):
             "img_url": self.img_url,
             "url": self.url,
             "clicks": self.clicks,
-            "status": self.status,
             "subject": Subject.query.get(self.subject_id).to_dict(),
-            "user_id": self.user_id,
             "create_time": self.create_time
         }
         return rep_dict

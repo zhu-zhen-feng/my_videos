@@ -81,7 +81,6 @@ def collect_video():
     3. 查询视频，并判断视频是否存在
     :return:
     """
-
     user = g.user
     if not user:
         return jsonify(errno=RET.SESSIONERR, errmsg="用户未登录")
@@ -135,12 +134,11 @@ def news_detail(video_id):
     :param video_id:
     :return:
     """
-
     # 查询用户登录信息
     user = g.user
     if not user:
         # 代表没有登录，重定向到首页
-        return redirect("/")
+        return render_template('videos/404.html', data={"user": None})
 
     # 查询新闻数据
     videos = None

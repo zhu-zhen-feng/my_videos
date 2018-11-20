@@ -1,15 +1,81 @@
-from flask import current_app
+import datetime
+import os
+import uuid
 from flask import g
 from flask import redirect, jsonify
 from flask import render_template
 from flask import request
-
-from info import constants, db
+from werkzeug.utils import secure_filename
+from config import Config
 from info.models import Videos, Subject
 from info.modules.profile import profile_blu
 from info.utils.common import user_login_data
-from info.utils.image_storage import storage
 from info.utils.response_code import RET
+from flask_wtf import FlaskForm
+from wtforms import StringField, FileField, SubmitField, SelectField
+from wtforms.validators import DataRequired
+from flask import current_app, flash, url_for
+from info import constants, db, create_app
+
+with create_app().app_context():  # 解决RuntimeError: application not registered on db instance and
+    tags = Subject.query.filter(Subject.cid == None)
+
+
+class MovieForm(FlaskForm):
+    """
+    电影表单
+    """
+    subject_id = SelectField(
+        label="分类 ：",
+        validators=[
+            DataRequired("请选择分类！")
+        ],
+        coerce=int,
+        choices=[(v.id, v.name) for v in tags],
+        description="分类",
+        render_kw={
+            "class": "sel_opt",
+            "id": "input_tag_id"
+        }
+    )
+    title = StringField(
+        label="简介 ：",
+        validators=[
+            DataRequired("请输入简介！")
+        ],
+        description="简介",
+        render_kw={
+            "class": "input_txt2",
+            "id": "input_title",
+            "placeholder": "请输入简介！"
+        }
+    )
+    url = FileField(
+        label="文件 ：",
+        validators=[
+            DataRequired("请上传视频！")
+        ],
+        description="文件",
+    )
+    logo = FileField(
+        label="封面 : ",
+        validators=[
+            DataRequired("请上传封面！")
+        ],
+        description="封面 ：",
+    )
+    submit = SubmitField(
+        label="编辑",
+        render_kw={
+            "class": "input_sub input_sub2",
+        }
+    )
+
+
+def change_filename(filename):
+    fileinfo = os.path.splitext(filename)
+    filename = datetime.datetime.now().strftime("%Y%m%d%H%M%S") + str(uuid.uuid4().hex) + fileinfo[-1]
+    return filename
 
 
 @profile_blu.route('/video_list')
@@ -30,10 +96,8 @@ def user_video_list():
     current_page = 1
     total_page = 1
     try:
-        # paginate = Videos.query.filter(Videos.user_id == user.id).paginate(page, constants.USER_COLLECTION_MAX_NEWS,
-        #                                                                    False)
         paginate = Videos.query.paginate(page, constants.USER_COLLECTION_MAX_NEWS,
-                                                                           False)
+                                         False)
         video_list = paginate.items
         current_page = paginate.page
         total_page = paginate.pages
@@ -131,73 +195,29 @@ def user_info():
 
 @profile_blu.route('/video_release', methods=["get", "post"])
 @user_login_data
-def video_release():
-    if request.method == "GET":
-        # 加载分类数据
-        categories = []
+def video_add():
+    form = MovieForm()
+    if form.validate_on_submit():
+        data = form.data
+        file_url = secure_filename(form.url.data.filename)
+        file_logo = secure_filename(form.logo.data.filename)
+        if not os.path.exists(Config.UP_DIR):
+            os.makedirs(Config.UP_DIR)
+            os.chmod(Config.UP_DIR, "rw")
+        url = change_filename(file_url)
+        img_url = change_filename(file_logo)
+        form.url.data.save(Config.UP_DIR + url)
+        movie = Videos()
+        movie.intro = data["title"],
+        movie.url = url,
+        movie.img_url = img_url
+        movie.clicks = 0,
+        movie.subject_id = int(data["subject_id"])
         try:
-            categories = Subject.query.all()
+            db.session.add(movie)
         except Exception as e:
-            current_app.logger.error(e)
-
-        category_dict_li = []
-        for category in categories:
-            category_dict_li.append(category.to_dict())
-
-        # 移除最新的分类
-        category_dict_li.pop(0)
-
-        return render_template('videos/user_video_release.html', data={"categories": category_dict_li})
-
-    # 1. 获取要提交的数据
-    # 标题
-    about = request.form.get("about")
-    # 视频
-    file = request.files.get("video_file")
-    img_url = request.files.get("index_image")
-    # 分类id
-    category_id = request.form.get("category_id")
-    print([about, img_url, file, category_id])
-    # 校验参数
-    # 2.1 判断数据是否有值
-    if not all([about, img_url, file, category_id]):
-        return jsonify(errno=RET.PARAMERR, errmsg="参数有误")
-
-    # 2.2
-    try:
-        category_id = int(category_id)
-    except Exception as e:
-        current_app.logger.error(e)
-        return jsonify(errno=RET.PARAMERR, errmsg="参数有误")
-    # 3.取到图片，将图片上传到七牛云
-    try:
-        video = file.read()
-        index_image_data = img_url.read()
-        # 上传到七牛云
-        url = storage(video)
-        key = storage(index_image_data)
-    except Exception as e:
-        current_app.logger.error(e)
-        return jsonify(errno=RET.PARAMERR, errmsg="参数有误")
-
-    if g.user.is_admin == False:
-        # 1代表待审核状态
-        video.status = 1
-    else:
-        video.status = 0
-    video = Videos()
-    video.intro = about
-    video.img_url = constants.QINIU_DOMIN_PREFIX + key
-    video.url = constants.QINIU_DOMIN_PREFIX + url
-    video.category_id = category_id
-    video.user_id = g.user.id
-
-    try:
-        db.session.add(video)
+            flash("添加视频失败！", "error")
+            db.session.rollback()
         db.session.commit()
-    except Exception as e:
-        current_app.logger.error(e)
-        db.session.rollback()
-        return jsonify(errno=RET.DBERR, errmsg="数据保存失败")
-
-    return jsonify(errno=RET.OK, errmsg="OK")
+        return redirect(url_for('profile.video_add'))
+    return render_template("videos/user_video_release.html", form=form)

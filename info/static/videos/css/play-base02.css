@@ -503,7 +503,7 @@ span div            1
 
 
 .comment_form{
-    margin-top:50px;
+    margin:50px 0 0 100px;
     overflow:hidden;
     width: 780px;
 }
@@ -548,6 +548,7 @@ span div            1
 }
 
 .comment_count{
+    margin-left: 100px;
     font-size: 16px;
     color: #333;
     border-bottom: 1px solid #ebebeb;
@@ -558,7 +559,7 @@ span div            1
 .comment_list{
     border-bottom:1px solid #ebebeb;
     overflow:hidden;
-    margin-top:15px;
+    margin:15px 0 0 100px;
     padding-bottom:15px;
     width: 780px;
 }

@@ -5,7 +5,6 @@ function getCookie(name) {
 
 
 $(function () {
-
     $(".release_form").submit(function (e) {
         e.preventDefault()
 

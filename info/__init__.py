@@ -10,8 +10,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import CSRFProtect
 from flask_wtf.csrf import generate_csrf
 from redis import StrictRedis
-from config import config
 from pymysql import install_as_MySQLdb
+from config import Config
 
 from info import constants
 
@@ -29,7 +29,7 @@ redis_store = None  # type: StrictRedis
 
 def setup_log(config_name):
     # 设置日志的记录等级
-    logging.basicConfig(level=config[config_name].LOG_LEVEL)  # 调试debug级
+    logging.basicConfig(level=Config.LOG_LEVEL)  # 调试debug级
     # 创建日志记录器，指明日志保存的路径、每个日志文件的最大大小、保存的日志文件个数上限
     file_log_handler = RotatingFileHandler("logs/log", maxBytes=1024 * 1024 * 100, backupCount=10)
     # 创建日志记录的格式 日志等级 输入日志信息的文件名 行数 日志信息
@@ -40,18 +40,18 @@ def setup_log(config_name):
     logging.getLogger().addHandler(file_log_handler)
 
 
-def create_app(config_name):
+def create_app():
     # 配置日志,并且传入配置名字，以便能获取到指定配置所对应的日志等级
-    setup_log(config_name)
+    setup_log(Config)
     # 创建Flask对象
     app = Flask(__name__)
     # 加载配置
-    app.config.from_object(config[config_name])
+    app.config.from_object(Config)
     # 通过app初始化
     db.init_app(app)
     # 初始化 redis 存储对象
     global redis_store
-    redis_store = StrictRedis(host=config[config_name].REDIS_HOST, port=config[config_name].REDIS_PORT,
+    redis_store = StrictRedis(host=Config.REDIS_HOST, port=Config.REDIS_PORT,
                               decode_responses=True)
     # 开启当前项目 CSRF 保护，只做服务器验证功能
     # 帮我们做了：从cookie中取出随机值，从表单中取出随机，然后进行校验，并且响应校验结果
@@ -63,9 +63,9 @@ def create_app(config_name):
 
     # 初始化数据库
     #  在Flask很多扩展里面都可以先初始化扩展的对象，然后再去调用 init_app 方法去初始化
-    from info.utils.common import do_index_class
+    # from info.utils.common import do_index_class
     # 添加自定义过滤器
-    app.add_template_filter(do_index_class, "index_class")
+    # app.add_template_filter(do_index_class, "index_class")
 
     from info.utils.common import user_login_data
 
@@ -75,32 +75,6 @@ def create_app(config_name):
         user = g.user
         data = {"user": user.to_dict() if user else None}
         return render_template('videos/404.html', data=data)
-
-    # @app.before_request
-    # @user_login_data
-    # def first_request():
-    #     user = g.user
-    #     user_ip = request.remote_addr
-    #     user_ip = ''.join(user_ip.split("."))
-    #     try:
-    #         user_real_ip = redis_store.get("user_" + user_ip)
-    #     except Exception as e:
-    #         current_app.logger.error(e)
-    #     else:
-    #         if user_real_ip:
-    #             data = {"user": user.to_dict() if user else None}
-    #             try:
-    #                 redis_store.set("user_" + user_ip, user_ip, constants.SEAL_UP_IP)
-    #             except Exception as e:
-    #                 current_app.logger(e)
-    #                 return render_template('videos/404.html', data=data)
-    #             else:
-    #                 return render_template('videos/404.html', data=data)
-    #
-    #     try:
-    #         redis_store.set("user_" + user_ip, user_ip, constants.USER_REQUEST_TIME)
-    #     except Exception as e:
-    #         current_app.logger.error(e)
 
     @app.after_request
     def after_request(response):

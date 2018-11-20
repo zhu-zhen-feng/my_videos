@@ -6,10 +6,9 @@ from info import create_app, db, models
 # 如果创建app或者相关业务逻辑
 
 # 通过指定的配置名字创建对应配置的app
-# create_app 就类似于工厂方法
 from info.models import User
 
-app = create_app('development')
+app = create_app()
 
 manager = Manager(app)
 # 将 app 与 db 关联
@@ -39,12 +38,9 @@ def superuser(name, password):
         print(e)
 
     print("添加成功")
-
 # 添加超级管理员命令
 # python manage.py superuser -n admin -p 12345678
 
 
-
 if __name__ == '__main__':
-    print(app.url_map)
     manager.run()

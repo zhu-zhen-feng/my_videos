@@ -1,4 +1,6 @@
 import logging
+import os
+
 from redis import StrictRedis
 
 
@@ -12,7 +14,8 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     # 在请求结束时候，如果指定此配置为 True ，那么 SQLAlchemy 会自动执行一次 db.session.commit()操作
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
-
+    UP_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), "info/static/uploads/")
+    FC_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), "info/static/uploads/")
     # Redis的配置
     REDIS_HOST = "127.0.0.1"
     REDIS_PORT = 6379
@@ -30,27 +33,3 @@ class Config(object):
 
     # 设置日志等级
     LOG_LEVEL = logging.DEBUG
-
-
-class DevelopmentConfig(Config):
-    """开发环境下的配置"""
-    DEBUG = True
-
-
-class ProductionConfig(Config):
-    """生产环境下的配置"""
-    DEBUG = False
-    LOG_LEVEL = logging.WARNING
-
-
-class TestingConfig(Config):
-    """单元测试环境下的配置"""
-    DEBUG = True
-    TESTING = True
-
-
-config = {
-    "development": DevelopmentConfig,
-    "production": ProductionConfig,
-    "testing": TestingConfig
-}

@@ -9,27 +9,65 @@
     <script type="text/javascript" src="../../static/videos/js/jquery.form.min.js"></script>
     <script src="../../static/videos/tinymce/js/tinymce/tinymce.min.js"></script>
     <script src="../../static/videos/js/tinymce_setup.js"></script>
-    <script type="text/javascript" src="../../static/videos/js/user_videos_release.js"></script>
 </head>
 <body class="inframe_body">
-    <form class="release_form">
-        <h3>视频发布</h3>
-        <div class="form-group"><label>视频标题：</label><input type="text" class="input_txt2" name="about"></div>
-        <div class="form-group">
-            <label>视频分类：</label>
-            <select class="sel_opt" name="category_id">
-                {% for category in data.categories %}
-                    <option value="{{ category.id }}">{{ category.name }}</option>
+    <form role="form" method="post" enctype="multipart/form-data" class="release_form">
+            <div class="box-body">
+                {% for msg in get_flashed_messages(category_filter=["OK"]) %}
+                    <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+                    <h4><i class="icon fa fa-check"></i> 操作成功</h4>
+                    {{ msg }}
+                    </div>
                 {% endfor %}
-            </select>
-        </div>
-        <div class="form-group"><label>视频：</label><input type="file" accept="video/*" class="input_file" name="video_file" ></div>
-        <div class="form-group"><label>首页图片：</label><input type="file" name="index_image" class="input_file"></div>
-        <div class="form-group">
-            <input type="submit" value="发 布" class="input_sub input_sub2">
-        </div>
-        <div class="error_tip2">错误提示</div>
-    </form>
+                <div class="form-group">
+                    <label for="input_tag_id">{{ form.subject_id.label }}</label>
+                    {{ form.subject_id }}
+                    {% for err in form.subject_id.errors %}
+                        <div class="col-md-12" style="color: red">
+                        {{ err }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    <label for="input_title" class="form-group">{{ form.title.label }}</label>
+                    {{ form.title }}
+                    {% for err in form.title.errors %}
+                        <div class="col-md-12" style="color:red">
+                            {{ err }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                                <label for="input_url">{{ form.url.label }}</label>
+                                {{ form.url }}
+                                {% for err in form.url.errors %}
+                                    <div class="col-md-12">
+                                        <font style="color:red">{{ err }}</font>
+                                    </div>
+                                {% endfor %}
+                                <div style="margin-top:5px;">
+                                    <div id="moviecontainer"></div>
+                                </div>
+                            </div>
+                <div class="form-group">
+                    <label for="input_logo">{{ form.logo.label }}</label>
+                    {{ form.logo }}
+                    {% for err in form.logo.errors %}
+                        <div class="col-md-12" style="color: red">
+                        {{ err }}
+                        </div>
+                    {% endfor %}
+                    <img data-src="holder.js/262x166" style="margin-top:5px;" class="img-responsive"
+                         alt="">
+                </div>
+
+            </div>
+            <div class="box-footer form-group">
+                {{ form.csrf_token }}
+                {{ form.submit }}
+            </div>
+        </form>
     <script>
         $(function(){
             window.parent.fnSetIframeHeight(900);

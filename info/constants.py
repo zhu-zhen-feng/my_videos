@@ -4,8 +4,10 @@ IMAGE_CODE_REDIS_EXPIRES = 300
 # 短信验证码Redis有效期，单位：秒
 SMS_CODE_REDIS_EXPIRES = 300
 
+# 本地存储视频路径
+
 # 七牛空间域名
-QINIU_DOMIN_PREFIX = "http://oyucyko3w.bkt.clouddn.com/"
+QINIU_DOMIN_PREFIX = "http://pif89oalj.bkt.clouddn.com/"
 
 # 首页展示最多的新闻数量
 HOME_PAGE_MAX_NEWS = 10
