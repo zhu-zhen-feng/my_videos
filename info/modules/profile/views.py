@@ -18,7 +18,7 @@ from flask import current_app, flash, url_for
 from info import constants, db, create_app
 
 with create_app().app_context():  # 解决RuntimeError: application not registered on db instance and
-    tags = Subject.query.filter(Subject.cid == None)
+    tags = Subject.query.all()
 
 
 class MovieForm(FlaskForm):
