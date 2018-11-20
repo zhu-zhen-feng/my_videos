@@ -106,12 +106,14 @@ class Videos(BaseModel, db.Model):
     intro = db.Column(db.String(60), nullable=False)  # 简介
     url = db.Column(db.String(256))  # 视频地址
     clicks = db.Column(db.Integer, default=0)  # 播放次数
+    img_url = db.Column(db.String(256))  # 封面
     subject_id = db.Column(db.Integer, db.ForeignKey("subject.id"), nullable=False)  # 分类id
 
     def to_dict(self):
         rep_dict = {
             "id": self.id,
             "intro": self.intro,
+            "img_url": self.img_url,
             "url": self.url,
             "clicks": self.clicks,
             "subject": Subject.query.get(self.subject_id).to_dict(),

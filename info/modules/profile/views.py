@@ -17,8 +17,9 @@ from wtforms.validators import DataRequired
 from flask import current_app, flash, url_for
 from info import constants, db, create_app
 
-with create_app().app_context():  # 解决RuntimeError: application not registered on db instance and
-    tags = Subject.query.all()
+app = create_app()
+# with app.app_context():  # 解决RuntimeError: application not registered on db instance and
+#     tags = Subject.query.all()
 
 
 class MovieForm(FlaskForm):
@@ -31,7 +32,7 @@ class MovieForm(FlaskForm):
             DataRequired("请选择分类！")
         ],
         coerce=int,
-        choices=[(v.id, v.name) for v in tags],
+        # choices=[(v.id, v.name) for v in tags],
         description="分类",
         render_kw={
             "class": "sel_opt",
