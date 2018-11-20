@@ -34,17 +34,14 @@ def news_list():
     # 查询当前cid的子目录
     subjects = []
     try:
-        subjects = Subject.query.filter(Subject.cid == cid).all()
+        subjects = Videos.query.order_by(Videos.clicks.desc()).limit(6)
     except Exception as e:
         current_app.logger.error(e)
         return jsonify(errno=RET.DBERR, errmsg="数据查询错误")
     subject_dict = []
-    c_name = []
     for subject in subjects:
-        if subject.cid is None:
-            subject_dict.append(subject.to_dict())
-        else:
-            c_name.append(subject.to_dict())
+        subject_dict.append(subject.to_dict())
+    print(len(subject_dict))
     # 3. 查询数据
     try:
         paginate = Videos.query.filter(Videos.subject_id == cid).order_by(Videos.create_time.desc()).paginate(page, per_page, False)
@@ -65,7 +62,6 @@ def news_list():
         "current_page": current_page,
         "video_dict_li": video_dict_li,
         "subject_dict":subject_dict,
-        "c_name": c_name
     }
     return jsonify(errno=RET.OK, errmsg="OK", data=data)
 

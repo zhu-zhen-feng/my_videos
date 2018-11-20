@@ -19,12 +19,11 @@ $(function () {
                 // 清除已有数据
                 if (cur_page == 1) {
                     $(".list_con").html("");
-                    $("#rank_list").html("")
                 }
                 for (var i=0;i<resp.data.video_dict_li.length;i++) {
                     var video = resp.data.video_dict_li[i]
                     var content = '<li>'
-                    content += '<a href="/videos/' + video.id + '" class="video_pic fr"><img src="' + video.img_url + '?imageView2/1/w/220/h/170"></a>'
+                    content += '<a href="/videos/' + video.id + '" class="video_pic fr"><img src="../../static/images/img.jpg"></a>'
                         content += '<div class="con_box"><a href="/videos/'+ video.id+'"><h3>'+ video.intro+'</h3></a>'
                         content += '<span>永胜学院&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>'
                         content += '<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;播放次数：'+ video.clicks+'</span></div>'
@@ -112,7 +111,7 @@ function updateNewsData() {
             for (var i=0;i<resp.data.video_dict_li.length;i++) {
                 var video = resp.data.video_dict_li[i]
                 var content = '<li>'
-                content += '<a href="/videos/' + video.id + '" class="video_pic fr"><img src="{{ url_for(\'static\', filename=\'uploads/20171002114509d50473a8b9ac46d4805eb4a6849ed6e4.png\')"></a>'
+                content += '<a href="/videos/' + video.id + '" class="video_pic fr"><img src="../../static/images/img.jpg"></a>'
                 content += '<div class="con_box"><a href="/videos/'+ video.id+'"><h3>'+ video.intro+'</h3></a>'
                 content += '<span>永胜学院&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>'
                 content += '<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;播放次数：'+ video.clicks+'</span></div>'

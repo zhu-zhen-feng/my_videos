@@ -57,13 +57,6 @@ class MovieForm(FlaskForm):
         ],
         description="文件",
     )
-    logo = FileField(
-        label="封面 : ",
-        validators=[
-            DataRequired("请上传封面！")
-        ],
-        description="封面 ：",
-    )
     submit = SubmitField(
         label="编辑",
         render_kw={
@@ -200,17 +193,14 @@ def video_add():
     if form.validate_on_submit():
         data = form.data
         file_url = secure_filename(form.url.data.filename)
-        file_logo = secure_filename(form.logo.data.filename)
         if not os.path.exists(Config.UP_DIR):
             os.makedirs(Config.UP_DIR)
             os.chmod(Config.UP_DIR, "rw")
         url = change_filename(file_url)
-        img_url = change_filename(file_logo)
         form.url.data.save(Config.UP_DIR + url)
         movie = Videos()
         movie.intro = data["title"],
         movie.url = url,
-        movie.img_url = img_url
         movie.clicks = 0,
         movie.subject_id = int(data["subject_id"])
         try:
